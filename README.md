@@ -6,11 +6,12 @@ Well, now you can.
 
 Hodor is a simple python interpreter for brainfuck with substitutions to a "Hodor" programming language.
 
-It consists of just three Instructions:
-Hodor.
-Hodor?
-Hodor!
-
+It consists of just three instructions:
+```
+Hodor.  
+Hodor?  
+Hodor!  
+```
 Have fun!
 
 Inspired by http://hackingjohnnz.blogspot.de/2011/06/ook-interpreter-in-python.html

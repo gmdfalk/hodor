@@ -1,8 +1,8 @@
 #!/usr/bin/env python2
-"""hodor - a tiny python interpreter for a "Hodor" brainfuck substitution.
+"""hodor - a tiny programming language based on brainfuck.
 
 Usage:
-    hodor.py [-b|-h] <file>
+    hodor.py <sourcefile> [-b]
 """
 import re
 import sys
@@ -109,17 +109,28 @@ def hodor_to_bf(source):
             ("Hodor?", "Hodor!"): "]"}
     return "".join([hmap[i] for i in re.findall(hreg, source) if i in hmap])
 
+def print_usage():
+    print __doc__
+    sys.exit()
 
 def main():
-    if len(sys.argv) < 3 or sys.argv[1] not in ("-h", "-b"):
-        print __doc__
+    # Print the help text if indicated.
+    if len(sys.argv) < 2:
+        print_usage()
+
+    # Read the sourcefile.
+    try:
+        with open(sys.argv[1]) as f:
+            source = f.read()
+    except IOError as e:
+        print "Could not read file:", e
         sys.exit()
-
-    with open(sys.argv[2]) as f:
-        source = f.read()
-
-    if sys.argv[1] == "-h":
+        
+    # Convert sourcefile from hodor to brainfuck code.
+    if len(sys.argv) == 2:
         source = hodor_to_bf(source)
+    elif len(sys.argv) > 2 and sys.argv[2] not in "-h":
+        print_usage()
 
     interp = Interpreter()
     interp.run(source)
